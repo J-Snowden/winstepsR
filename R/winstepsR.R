@@ -6,11 +6,11 @@
 #' @section winstepsR functions:
 #' \link[winstepsR]{filter_zresid}
 #'
-#' r_control_file
+#' \link[winstepsR]{r_control_file}
 #'
-#' winsteps_output
+#' \link[winstepsR]{winsteps_output}
 #'
-#' clean_dif
+#' \link[winstepsR]{clean_dif}
 #'
 #' @docType package
 #' @name winstepsR
