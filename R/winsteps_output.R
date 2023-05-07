@@ -14,9 +14,9 @@
 #' @export
 #' @importFrom dplyr "%>%"
 
-winsteps_output <- function(ctrlfile, shortname, ..., tables = NULL,
-                            files = NULL, dif = NULL, ifile = NULL,
-                            sfile = NULL) {
+winsteps_output2 <- function(ctrlfile, shortname, ..., tables = NULL,
+                             files = NULL, dif = NULL, ifile = NULL,
+                             sfile = NULL) {
 
   wd <- getwd()
   ctrltxt <- file.path(wd, ctrlfile)
@@ -59,8 +59,13 @@ winsteps_output <- function(ctrlfile, shortname, ..., tables = NULL,
     outfiles <- c()
 
     for (i in 1:length(files)) {
-      outfiles <- append(outfiles, paste0(files[i], "=", shortname, "_",
-                                          files[i], ".xlsx"))
+      if(files[i] == "ifile" | files[i] == "sfile"){
+        outfiles <- append(outfiles, paste0(files[i], "=", shortname, "_",
+                                            files[i], ".txt"))
+      } else {
+        outfiles <- append(outfiles, paste0(files[i], "=", shortname, "_",
+                                            files[i], ".xlsx"))
+      }
     }
     outfiles <- toString(outfiles)
   }
@@ -98,11 +103,11 @@ winsteps_output <- function(ctrlfile, shortname, ..., tables = NULL,
   }
 
   if (!is.null(ifile)) {
-    cat(paste(first, ctrltxt, ifile_text), step = "\n")
+    cat(paste(first, ctrltxt, blank, ifile_text), step = "\n")
   }
 
   if (!is.null(sfile)) {
-    cat(paste(first, ctrltxt, sfile_text), step = "\n")
+    cat(paste(first, ctrltxt, blank, sfile_text), step = "\n")
   }
 
   cat(paste("EXIT"))
