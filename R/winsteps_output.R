@@ -14,7 +14,7 @@
 #' @export
 #' @importFrom dplyr "%>%"
 
-winsteps_output2 <- function(ctrlfile, shortname, ..., tables = NULL,
+winsteps_output <- function(ctrlfile, shortname, ..., tables = NULL,
                              files = NULL, dif = NULL, ifile = NULL,
                              sfile = NULL) {
 
