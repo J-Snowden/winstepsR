@@ -103,11 +103,11 @@ winsteps_output <- function(ctrlfile, shortname, ..., tables = NULL,
   }
 
   if (!is.null(ifile)) {
-    cat(paste(first, ctrltxt, blank, ifile_text), step = "\n")
+    cat(paste(first, ctrltxt, ifile_text), step = "\n")
   }
 
   if (!is.null(sfile)) {
-    cat(paste(first, ctrltxt, blank, sfile_text), step = "\n")
+    cat(paste(first, ctrltxt, sfile_text), step = "\n")
   }
 
   cat(paste("EXIT"))
