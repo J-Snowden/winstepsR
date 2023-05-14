@@ -20,6 +20,8 @@ winsteps_output(
 
 \item{shortname}{Name used to save exported files}
 
+\item{...}{Additional arguments passed to internal functions.}
+
 \item{tables}{A vector containing the tables to be exported from Winsteps}
 
 \item{files}{A vector containing the files to be exported from Winsteps}

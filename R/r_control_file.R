@@ -12,25 +12,27 @@
 #' @param sfile Optional. Location of a .txt sfile
 #' @param demographics Optional. Column names of demographic variables to
 #' include in the control file
+#' @param ... Additional arguments passed to internal functions
 #' @return Creates a Winsteps control file in the current directory
 #' @export
-#' @importFrom dplyr "%>%"
+#' @importFrom magrittr %>%
 
 r_control_file <- function(name, data, item1, ni, id_col, ..., groups = NULL,
                            ifile = NULL, sfile = NULL, demographics = NULL) {
 
-  tic("generating control file")
+  tictoc::tic("generating control file")
 
   groups_string <- ""
 
   data <- data %>%
-    select(all_of(item1):(all_of(item1)+(ni-1)), all_of(id_col)) %>%
-    mutate("blank" = " ") %>%
-    relocate(all_of(id_col), .after = "blank")
+    dplyr::select(dplyr::all_of(item1):(dplyr::all_of(item1)+(ni-1)),
+                  dplyr::all_of(id_col)) %>%
+    dplyr::mutate("blank" = " ") %>%
+    dplyr::relocate(dplyr::all_of(id_col), .after = "blank")
 
   if (!is.null(demographics)) {
     demographics <- demographics %>%
-      mutate(across(everything(), as.character))
+      dplyr::mutate(dplyr::across(dplyr::everything(), as.character))
 
     demographics[is.na(demographics)] <- "."
 
@@ -38,10 +40,10 @@ r_control_file <- function(name, data, item1, ni, id_col, ..., groups = NULL,
     data$NewSID <- stringr::str_pad(data$NewSID, max(nchar(data[[id_col]])),
                                     "right")
 
-    data$NewSID <- paste0(str_c(data$NewSID, ' '))
+    data$NewSID <- paste0(stringr::str_c(data$NewSID, ' '))
 
     for (i in 1:length(demographics)) {
-      data$NewSID <- paste0(str_c(data$NewSID, eval(parse(text = paste(
+      data$NewSID <- paste0(stringr::str_c(data$NewSID, eval(parse(text = paste(
         "demographics$", colnames(demographics[i]))))), " ")
 
     }
@@ -114,9 +116,9 @@ r_control_file <- function(name, data, item1, ni, id_col, ..., groups = NULL,
 
   cat(new, file = paste0(name, '_cf_r.txt'), sep = "")
 
-  write.table(data, file = paste0(name, '_cf_r.txt'), row.names = FALSE,
+  utils::write.table(data, file = paste0(name, '_cf_r.txt'), row.names = FALSE,
               col.names = FALSE,
               na = ".", sep = "", quote = FALSE, append = TRUE)
 
-  toc()
+  tictoc::toc()
 }

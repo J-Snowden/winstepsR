@@ -12,11 +12,14 @@
 #' @return A data frame object that with the responses outside the z-residual
 #' thresholds removed, and a data frame object with the removed responses
 #' @export
-#' @importFrom dplyr "%>%"
+#' @importFrom magrittr %>%
+#' @importFrom rlang :=
 
 filter_zresid <- function(data, xfile, id_col, items, zthresh) {
 
-  tic("total")
+  '.data' <- NULL
+
+  tictoc::tic("total")
 
   count_filtered <- 0
 
@@ -31,10 +34,10 @@ filter_zresid <- function(data, xfile, id_col, items, zthresh) {
     count_filtered <- count_filtered + nrow(temp_filtered_xfile)
 
     data <- data %>%
-      mutate("{items[i]}" := replace(.data[[items[i]]], .data[[id_col]]
+      dplyr::mutate("{items[i]}" := replace(.data[[items[i]]], .data[[id_col]]
                                      %in% temp_filtered_xfile$`PERSON LABEL`, NA))
 
-    filtered_xfile <- bind_rows(filtered_xfile, temp_filtered_xfile)
+    filtered_xfile <- dplyr::bind_rows(filtered_xfile, temp_filtered_xfile)
 
     message((paste0(nrow(filtered_xfile), " responses (",
                     round((nrow(filtered_xfile) / nrow(data)*100), 3),
@@ -49,7 +52,7 @@ filter_zresid <- function(data, xfile, id_col, items, zthresh) {
 
   out <- list(data, filtered_xfile)
 
-  toc()
+  tictoc::toc()
 
   return(out)
 }

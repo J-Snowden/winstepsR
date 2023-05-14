@@ -10,9 +10,10 @@
 #' @param dif Column names for a DIF table to be exported
 #' @param ifile Include 'ifile' for an ifile to be exported
 #' @param sfile Include 'sfile' for an sfile to be exported
+#' @param ... Additional arguments passed to internal functions.
 #' @return Exports select tables and files from Winsteps
 #' @export
-#' @importFrom dplyr "%>%"
+#' @importFrom magrittr %>%
 
 winsteps_output <- function(ctrlfile, shortname, ..., tables = NULL,
                              files = NULL, dif = NULL, ifile = NULL,

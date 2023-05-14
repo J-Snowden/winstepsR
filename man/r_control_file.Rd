@@ -28,6 +28,8 @@ r_control_file(
 
 \item{id_col}{The name of the column where person names are located}
 
+\item{...}{Additional arguments passed to internal functions}
+
 \item{groups}{Optional. String input for addings a ISGROUPS line.}
 
 \item{ifile}{Optional. Location of a .txt ifile}
