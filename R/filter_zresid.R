@@ -17,9 +17,9 @@
 
 filter_zresid <- function(data, xfile, id_col, items, zthresh) {
 
-  '.data' <- NULL
+  '.data' = NULL
 
-  tictoc::tic("total")
+  tic("total")
 
   count_filtered <- 0
 
@@ -34,25 +34,25 @@ filter_zresid <- function(data, xfile, id_col, items, zthresh) {
     count_filtered <- count_filtered + nrow(temp_filtered_xfile)
 
     data <- data %>%
-      dplyr::mutate("{items[i]}" := replace(.data[[items[i]]], .data[[id_col]]
+      mutate("{items[i]}" := replace(.data[[items[i]]], .data[[id_col]]
                                      %in% temp_filtered_xfile$`PERSON LABEL`, NA))
 
-    filtered_xfile <- dplyr::bind_rows(filtered_xfile, temp_filtered_xfile)
+    filtered_xfile <- bind_rows(filtered_xfile, temp_filtered_xfile)
 
-    message((paste0(nrow(filtered_xfile), " responses (",
-                    round((nrow(filtered_xfile) / nrow(data)*100), 3),
-                    "%) removed from ", items[i])))
+    cat((paste0(nrow(temp_filtered_xfile), " responses (",
+                    round((nrow(temp_filtered_xfile) / nrow(data)*100), 3),
+                    "%) removed from ", items[i], "\n")))
   }
 
-  message(paste("There were a total of", format(count_filtered, big.mark =","),
+  cat(paste("There were a total of", format(count_filtered, big.mark =","),
                 "datapoints removed out of", format(nrow(xfile), big.mark=","),
-                "datapoints in the dataset."))
-  message(paste0("That's ", round((count_filtered / nrow(xfile)*100), 3),
-                 "% of all responses."))
+                "datapoints in the dataset.\n"))
+  cat(paste0("That's ", round((count_filtered / nrow(xfile)*100), 3),
+                 "% of all responses.\n"))
 
   out <- list(data, filtered_xfile)
 
-  tictoc::toc()
+  toc()
 
   return(out)
 }
