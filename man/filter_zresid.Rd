@@ -4,25 +4,26 @@
 \alias{filter_zresid}
 \title{filter_zresid}
 \usage{
-filter_zresid(data, xfile, id_col, items, zthresh)
+filter_zresid(df, xfile, id_col, items, zthresh)
 }
 \arguments{
-\item{data}{A data set object}
+\item{df}{A data set object.}
 
-\item{xfile}{A XFILE or Observation File exported from WINSTEPS}
+\item{xfile}{A data set object that is created from an XFILE or Observation
+File exported from WINSTEPS.}
 
-\item{id_col}{The name of the column where person names are located}
+\item{id_col}{The name of the column where person names are located.}
 
-\item{items}{The column name(s) of item(s) that will be filtered}
+\item{items}{The column name(s) of item(s) that will be filtered.}
 
 \item{zthresh}{A vector containing the high and low values of the
-z-residuals used to filter the data}
+z-residuals used to filter the data.}
 }
 \value{
 A data frame object that with the responses outside the z-residual
-thresholds removed, and a data frame object with the removed responses
+thresholds removed, and a data frame object with the removed responses.
 }
 \description{
 Removes responses from a data set based on user-supplied
-z-residual thresholds
+z-residual thresholds.
 }

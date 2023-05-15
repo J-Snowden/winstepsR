@@ -22,15 +22,15 @@ winsteps_output(
 
 \item{...}{Additional arguments passed to internal functions.}
 
-\item{tables}{A vector containing the tables to be exported from Winsteps}
+\item{tables}{Optional. A vector containing the tables to be exported from Winsteps}
 
-\item{files}{A vector containing the files to be exported from Winsteps}
+\item{files}{Optional. A vector containing the files to be exported from Winsteps}
 
-\item{dif}{Column names for a DIF table to be exported}
+\item{dif}{Optional. Column names for a DIF table to be exported}
 
-\item{ifile}{Include 'ifile' for an ifile to be exported}
+\item{ifile}{Optional. Include 'ifile' for an ifile to be exported}
 
-\item{sfile}{Include 'sfile' for an sfile to be exported}
+\item{sfile}{Optional. Include 'sfile' for an sfile to be exported}
 }
 \value{
 Exports select tables and files from Winsteps

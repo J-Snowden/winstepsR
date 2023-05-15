@@ -6,42 +6,45 @@
 \usage{
 r_control_file(
   name,
-  data,
-  item1,
-  ni,
-  id_col,
+  df,
+  first_item,
+  num_items,
+  person_id_col,
   ...,
   groups = NULL,
+  irefer = NULL,
   ifile = NULL,
   sfile = NULL,
   demographics = NULL
 )
 }
 \arguments{
-\item{name}{The name you want to save the control file as}
+\item{name}{The name you want to save the control file as.}
 
-\item{data}{A data set object}
+\item{df}{A data set object.}
 
-\item{item1}{The numeric location of the first item in your dataset}
+\item{first_item}{The numeric location of the first item in your dataset.}
 
-\item{ni}{The number of items you want to add to the control file}
+\item{num_items}{The number of items you want to add to the control file.}
 
-\item{id_col}{The name of the column where person names are located}
+\item{person_id_col}{The name of the column where person names are located.}
 
-\item{...}{Additional arguments passed to internal functions}
+\item{...}{Additional arguments passed to internal functions.}
 
-\item{groups}{Optional. String input for addings a ISGROUPS line.}
+\item{groups}{Optional. String input for adding a ISGROUPS line.}
 
-\item{ifile}{Optional. Location of a .txt ifile}
+\item{irefer}{Optional. String input for adding a IREFER line.}
 
-\item{sfile}{Optional. Location of a .txt sfile}
+\item{ifile}{Optional. Location of a .txt ifile.}
+
+\item{sfile}{Optional. Location of a .txt sfile.}
 
 \item{demographics}{Optional. Column names of demographic variables to
-include in the control file}
+include in the control file.}
 }
 \value{
-Creates a Winsteps control file in the current directory
+Creates a Winsteps control file in the current directory.
 }
 \description{
-Creates a Winsteps control file from an R data.frame
+Creates a Winsteps control file from an R data.frame.
 }

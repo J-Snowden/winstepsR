@@ -11,6 +11,16 @@
 
 clean_dif <- function(filename, outname) {
 
+  # Check that filename is a character string
+  if (!is.character(filename)) {
+    stop("Input 'filename' is not a character string.")
+  }
+
+  # Check that outname is a character string
+  if (!is.character(outname)) {
+    stop("Input 'outname' is not a character string.")
+  }
+
   'Person Class' <- 'Person Class 2' <- 'DIF.CONTRAST' <- 'Name' <-
     'Welch.Prob.' <- 'MH.Prob' <- 'Prob.' <- 'Person.Class' <-
     'Person.Class.2' <- NULL
@@ -31,7 +41,8 @@ clean_dif <- function(filename, outname) {
 
   table30.1 <- data[9:table30.1_end-1]
   table30.1 <- stringr::str_split(table30.1, "\\s{1,7}")
-  suppressWarnings(table30.1_df <- do.call(rbind.data.frame, table30.1))
+  #suppressWarnings(table30.1_df <- do.call(rbind.data.frame, table30.1))
+  table30.1_df <- do.call(rbind.data.frame, table30.1)
 
   table30.1_df <- table30.1_df %>%
     dplyr::select(2, 4:7, 9:22) %>%
@@ -51,37 +62,37 @@ clean_dif <- function(filename, outname) {
 
   sheet1 <- table30.1_df %>%
     dplyr::filter(`DIF.CONTRAST` <= -0.64 & `Welch.Prob.` <= 0.05 |
-             `DIF.CONTRAST` >= 0.64 & `Welch.Prob.` <= 0.05) %>%
+                    `DIF.CONTRAST` >= 0.64 & `Welch.Prob.` <= 0.05) %>%
     dplyr::arrange(`DIF.CONTRAST`)
 
   end_of_1 <- nrow(sheet1)/2
 
   sheet1.1 <- sheet1[1:end_of_1,] %>%
     dplyr::arrange(`Person.Class`, `Person.Class.2`, `Name`, `DIF.CONTRAST`,
-            `MH.Prob`) %>%
+                   `MH.Prob`) %>%
     dplyr::add_row()
 
   sheet1.2 <- sheet1[(end_of_1+1):nrow(sheet1),] %>%
     dplyr::arrange(`Person.Class`, `Person.Class.2`, `Name`, `DIF.CONTRAST`,
-            `MH.Prob`)
+                   `MH.Prob`)
 
   sheet1 <- dplyr::bind_rows(sheet1.1, sheet1.2)
 
   sheet2 <- table30.1_df %>%
     dplyr::filter(`DIF.CONTRAST` <= -0.64 & `MH.Prob` <= 0.05 |
-             `DIF.CONTRAST` >= 0.64 & `MH.Prob` <= 0.05) %>%
+                    `DIF.CONTRAST` >= 0.64 & `MH.Prob` <= 0.05) %>%
     dplyr::arrange(`DIF.CONTRAST`)
 
   end_of_1 <- nrow(sheet2)/2
 
   sheet2.1 <- sheet2[1:end_of_1,] %>%
     dplyr::arrange(`Person.Class`, `Person.Class.2`, `Name`, `DIF.CONTRAST`,
-            `MH.Prob`) %>%
+                   `MH.Prob`) %>%
     dplyr::add_row()
 
   sheet2.2 <- sheet2[(end_of_1+1):nrow(sheet1),] %>%
     dplyr::arrange(`Person.Class`, `Person.Class.2`, `Name`, `DIF.CONTRAST`,
-            `MH.Prob`)
+                   `MH.Prob`)
 
   sheet2 <- dplyr::bind_rows(sheet2.1, sheet2.2)
 
@@ -97,7 +108,8 @@ clean_dif <- function(filename, outname) {
                                                 == TRUE)-3)]
 
   table30.2_split <- stringr::str_split(table30.2, "\\s{1,7}")
-  suppressWarnings(table30.2_df <- do.call(rbind.data.frame, table30.2_split))
+  #suppressWarnings(table30.2_df <- do.call(rbind.data.frame, table30.2_split))
+  table30.2_df <- do.call(rbind.data.frame, table30.2_split)
 
   table30.2_df <- table30.2_df %>%
     dplyr::select(2, 4:17) %>%
@@ -122,9 +134,11 @@ clean_dif <- function(filename, outname) {
   # Write File --------------------------------------------------------------
 
   writexl::write_xlsx(list("30.1 - Rasch-Welch" = sheet1, "30.1 - Mantel-Haenszel"
-                  = sheet2, "Table 30.2" = table30.2_df),
-             paste0("Significant_", outname, ".xlsx"))
-  message(paste0('Results saved as ', '"Significant_', outname, '.xlsx"'))
-  message(paste0("Save location: ", getwd()))
+                           = sheet2, "Table 30.2" = table30.2_df),
+                      paste0("Significant_", outname, ".xlsx"))
+
+  cat(paste0('Results saved as ', '"Significant_', outname, '.xlsx"\n'))
+  cat(paste0("Save location: ", getwd(), "\n"))
+
   tictoc::toc()
 }
