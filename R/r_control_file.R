@@ -48,8 +48,8 @@ r_control_file <- function(name, df, first_item, num_items, person_id_col, ...,
   }
 
   # Check that groups is a character string
-  if (!is.null(groups) && !(is.character(groups) || is.numeric(groups))) {
-    stop("Input 'groups' must be a character string.")
+  if (!is.null(groups) && !(is.character(groups) || groups == 0)) {
+    stop("Input 'groups' must be a character string or 0")
   }
 
   # Check that irefer is a character string
@@ -126,14 +126,14 @@ r_control_file <- function(name, df, first_item, num_items, person_id_col, ...,
                         "; GROUPS = 0 ; Partial Credit model: in case items have different rating scales\n")
 
   if (!is.null(groups)) {
-    if (groups == 0) {
-      groups_string <- "GROUPS = 0 ; Partial Credit model: in case items have different rating scales\n"
-    } else {
+    if (is.character(groups)) {
       groups_string <- "ISGROUPS = *\n"
       for (i in 1:length(groups)) {
         groups_string <- append(groups_string, paste0(groups[i], "\n"))
       }
       groups_string <- append(groups_string, "*\n")
+    } else {
+      groups_string <- "GROUPS = 0 ; Partial Credit model: in case items have different rating scales\n"
     }
   }
 
