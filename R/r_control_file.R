@@ -126,11 +126,15 @@ r_control_file <- function(name, df, first_item, num_items, person_id_col, ...,
                         "; GROUPS = 0 ; Partial Credit model: in case items have different rating scales\n")
 
   if (!is.null(groups)) {
-    groups_string <- "ISGROUPS = *\n"
-    for (i in 1:length(groups)) {
-      groups_string <- append(groups_string, paste0(groups[i], "\n"))
+    if (groups = 0) {
+      groups_string <- "IGROUPS = 0 ; Partial Credit model: in case items have different rating scales\n"
+    } else {
+      groups_string <- "ISGROUPS = *\n"
+      for (i in 1:length(groups)) {
+        groups_string <- append(groups_string, paste0(groups[i], "\n"))
+      }
+      groups_string <- append(groups_string, "*\n")
     }
-    groups_string <- append(groups_string, "*\n")
   }
 
   if (!is.null(irefer)) {
