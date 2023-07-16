@@ -20,7 +20,7 @@
 
 r_control_file <- function(name, df, first_item, num_items, person_id_col, ...,
                             groups = NULL, irefer = NULL, ifile = NULL,
-                            sfile = NULL, demographics = NULL) {
+                            sfile = NULL, demographics = NULL, key = NULL) {
 
   # Check that name is a character string
   if (!is.character(name)) {
@@ -79,6 +79,7 @@ r_control_file <- function(name, df, first_item, num_items, person_id_col, ...,
   irefer_string <- ""
   ifile_string <- ""
   sfile_string <- ""
+  key_string <- ""
 
 
   df <- df %>%
@@ -149,7 +150,8 @@ r_control_file <- function(name, df, first_item, num_items, person_id_col, ...,
     unique() %>%
     sort()
 
-  codes <- c("CODES = ", ".", unique, " ; matches the data\n")
+  codes <- c("CODES = ", unique, " ; matches the data\n")
+  #codes <- c("CODES = ", ".", unique, " ; matches the data\n")
 
   newsid <- toupper(person_id_col)
   sidlen <- (namlen - (length(demographics) + 1)) - (length(demographics))
@@ -167,6 +169,9 @@ r_control_file <- function(name, df, first_item, num_items, person_id_col, ...,
     win_demo <- paste0("\n", win_demo)
 
   }
+
+  if (!is.null(key)) {
+    key_string <- paste0("KEY = ", key, "\n")
 
   if (!is.null(ifile)) {
     ifile_string <- paste0("IAFILE = ", ifile, "\n")
@@ -191,8 +196,8 @@ r_control_file <- function(name, df, first_item, num_items, person_id_col, ...,
   }
   end_names <- "END NAMES\n"
 
-  new <- c(out_string1, groups_string, irefer_string, codes, out_string2,
-           item_names, end_names)
+  new <- c(out_string1, groups_string, irefer_string, codes, key_string,
+           out_string2, item_names, end_names)
 
   cat(new, file = paste0(name, '_cf_r.txt'), sep = "")
 
