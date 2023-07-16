@@ -172,6 +172,7 @@ r_control_file <- function(name, df, first_item, num_items, person_id_col, ...,
 
   if (!is.null(key)) {
     key_string <- paste0("KEY = ", key, "\n")
+  }
 
   if (!is.null(ifile)) {
     ifile_string <- paste0("IAFILE = ", ifile, "\n")
