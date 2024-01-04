@@ -49,6 +49,8 @@ psychometrics_table <- function(filename) {
     # Remove "| and |" and split the strings
     result_list <- str_split(str_replace_all(table10.1, "\\|", " "), "\\s+")
 
+    result_df <- c("")
+
     # Convert the list to a table10_data frame
     result_df <- data.frame(do.call(rbind, result_list), stringsAsFactors = FALSE) %>%
       select(-1, -ncol(.)) %>%
