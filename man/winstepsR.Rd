@@ -17,5 +17,7 @@ and export tables and files from R.
 \link[winstepsR]{winsteps_output}
 
 \link[winstepsR]{clean_dif}
+
+\link[winstepsR]{psychometrics_table}
 }
 
