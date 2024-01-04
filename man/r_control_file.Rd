@@ -15,7 +15,8 @@ r_control_file(
   irefer = NULL,
   ifile = NULL,
   sfile = NULL,
-  demographics = NULL
+  demographics = NULL,
+  key = NULL
 )
 }
 \arguments{

@@ -12,6 +12,8 @@
 #'
 #' \link[winstepsR]{clean_dif}
 #'
+#' \link[winstepsR]{psychometrics_table}
+#'
 #' @docType package
 #' @name winstepsR
 NULL
