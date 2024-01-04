@@ -92,7 +92,7 @@ r_control_file10 <- function(name, data, item1, ni, id_col, data2, ...,
     unique() %>%
     sort()
 
-  codes <- 'CODES = ". 1 102 3 4 5 6 7 8 9 " ; matches the data\n'
+  codes <- 'CODES = "1 102 3 4 5 6 7 8 9 " ; matches the data\n'
 
   NewSID <- toupper(id_col)
   sidlen <- (namlen - (length(demographics) + 1)) - (length(demographics))
