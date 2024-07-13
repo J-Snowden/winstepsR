@@ -95,13 +95,13 @@ r_control_file_plus10 <- function(name, df, first_item, num_items, person_id_col
     demographics[is.na(demographics)] <- "."
 
     #do the next 2 lines need to be in here? Or are they better outside?
-    df$NewSID <- stringr::str_pad(df$NewSID, max(nchar(df[[person_id_col]])),
+    df[[person_id_col]] <- stringr::str_pad(df[[person_id_col]], max(nchar(df[[person_id_col]])),
                                   "right")
 
-    df$NewSID <- paste0(stringr::str_c(df$NewSID, ' '))
+    df[[person_id_col]] <- paste0(stringr::str_c(df[[person_id_col]], ' '))
 
     for (i in 1:length(demographics)) {
-      df$NewSID <- paste0(stringr::str_c(df$NewSID, eval(parse(text = paste(
+      df[[person_id_col]] <- paste0(stringr::str_c(df[[person_id_col]], eval(parse(text = paste(
         "demographics$", colnames(demographics[i]))))), " ")
 
     }
