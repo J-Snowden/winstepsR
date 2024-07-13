@@ -46,6 +46,36 @@ clean_dif <- function(filename, outname) {
 
   table30.1_df <- do.call(rbind.data.frame, table30.1)
 
+  shift_row_data <- function(df) {
+    shift_if_numeric <- function(row) {
+      # Check if column 3 is numeric
+      if (!is.na(as.numeric(row[3]))) {
+        # Shift everything from column 3 to the right
+        row <- c(row[1:2], "", row[3:(length(row)-1)])
+      }
+
+      # Check if column 8 (which is now 9 if we shifted before) is numeric
+      if (!is.na(as.numeric(row[8]))) {
+        # Shift everything from column 8 to the right
+        row <- c(row[1:7], "", row[8:(length(row)-1)])
+      }
+
+      return(row)
+    }
+
+    # Apply the shift function to each row
+    df_shifted <- t(apply(df, 1, shift_if_numeric))
+
+    # Convert back to data frame and set column names
+    df_shifted <- as.data.frame(df_shifted, stringsAsFactors = FALSE)
+    colnames(df_shifted) <- colnames(df)
+
+    return(df_shifted)
+  }
+
+  # Apply the function to your dataframe
+  table30.1_df <- shift_row_data(table30.1_df)
+
   table30.1_df <- table30.1_df %>%
     dplyr::select(2, 4:7, 9:22) %>%
     stats::setNames(table30.1_colnames) %>%
