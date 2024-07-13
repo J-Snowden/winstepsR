@@ -18,7 +18,7 @@
 #' @export
 #' @importFrom magrittr %>%
 
-r_control_file_plus10 <- function(name, df, first_item, num_items, person_id_col, ...,
+r_control_file <- function(name, df, first_item, num_items, person_id_col, ...,
                                   groups = NULL, irefer = NULL, ifile = NULL,
                                   sfile = NULL, demographics = NULL, key = NULL) {
 
@@ -95,13 +95,13 @@ r_control_file_plus10 <- function(name, df, first_item, num_items, person_id_col
     demographics[is.na(demographics)] <- "."
 
     #do the next 2 lines need to be in here? Or are they better outside?
-    df$person_id_col <- stringr::str_pad(df$person_id_col, max(nchar(df[[person_id_col]])),
-                                  "right")
+    df[[person_id_col]] <- stringr::str_pad(df[[person_id_col]], max(nchar(df[[person_id_col]])),
+                                            "right")
 
-    df$person_id_col <- paste0(stringr::str_c(df$person_id_col, ' '))
+    df[[person_id_col]] <- paste0(stringr::str_c(df[[person_id_col]], ' '))
 
     for (i in 1:length(demographics)) {
-      df$person_id_col <- paste0(stringr::str_c(df$person_id_col, eval(parse(text = paste(
+      df[[person_id_col]] <- paste0(stringr::str_c(df[[person_id_col]], eval(parse(text = paste(
         "demographics$", colnames(demographics[i]))))), " ")
 
     }
@@ -111,7 +111,7 @@ r_control_file_plus10 <- function(name, df, first_item, num_items, person_id_col
 
   df_items <- df %>% select(1:(ncol(df)-2))
 
-  if (any(as.matrix(df_items) > 9)) {
+  if (any(as.matrix(df_items) > 9, na.rm = TRUE)) {
 
     print("using 10 items")
 

@@ -40,8 +40,10 @@ clean_dif <- function(filename, outname) {
   table30.1_end <- min(which(grepl("Width of Mantel", data) == TRUE))
 
   table30.1 <- data[9:table30.1_end-1]
+  table30.1 <- gsub("\\|$", "", table30.1)
   table30.1 <- stringr::str_split(table30.1, "\\s{1,7}")
-  #suppressWarnings(table30.1_df <- do.call(rbind.data.frame, table30.1))
+  table30.1 <- lapply(table30.1, function(x) x[1:22])
+
   table30.1_df <- do.call(rbind.data.frame, table30.1)
 
   table30.1_df <- table30.1_df %>%
@@ -107,8 +109,12 @@ clean_dif <- function(filename, outname) {
   table30.2 <- data[(table30.1_end + 12):(which(grepl("TABLE 30.3", data)
                                                 == TRUE)-3)]
 
+  table30.2 <- gsub("\\|$", "", table30.2)
+
   table30.2_split <- stringr::str_split(table30.2, "\\s{1,7}")
-  #suppressWarnings(table30.2_df <- do.call(rbind.data.frame, table30.2_split))
+
+  table30.2_split <- lapply(table30.2_split, function(x) x[1:17])
+
   table30.2_df <- do.call(rbind.data.frame, table30.2_split)
 
   table30.2_df <- table30.2_df %>%
@@ -128,8 +134,8 @@ clean_dif <- function(filename, outname) {
 
   #return(table30.2_df)
   table30.2_df <- table30.2_df %>%
-    dplyr::filter(`Prob.` <= 0.05)
-
+    dplyr::filter(`Prob.` <= 0.05 & `DIF.Size` <= -0.64 |
+                    `Prob.` <= 0.05 & `DIF.Size` >= 0.64)
 
   # Write File --------------------------------------------------------------
 
